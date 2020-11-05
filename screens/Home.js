@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { Card,FAB } from "react-native-paper";
+import { Card, FAB } from "react-native-paper";
 
 const Home = () => {
   return (
@@ -16,17 +16,17 @@ const Home = () => {
           />
           <View style={{ marginLeft: 10 }}>
             <Text style={{ fontSize: 18 }}>Baby Yoda</Text>
-            <Text style={{ fontSize: 18 }}>Senior Developer</Text>
+            <Text style={{ fontSize: 18 }}>Senior Jedi</Text>
           </View>
         </View>
       </Card>
-      
-        <FAB
-      style={styles.fab}
-      small
-      icon="plus"
-      onPress={() => console.log('Pressed')}
-    />
+
+      <FAB
+        style={styles.fab}
+        small
+        icon="plus"
+        onPress={() => console.log("Pressed")}
+      />
     </View>
   );
 };
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   cardView: {
     flexDirection: "row",
-    marginLeft:5,
+    marginLeft: 5,
     padding: 6,
   },
   profile: {
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   fab: {
-    position: 'absolute',
+    position: "absolute",
     margin: 16,
     right: 0,
     bottom: 0,
