@@ -2,9 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Card, FAB } from "react-native-paper";
 
-const Home = () => {
+const Home = (props) => {
   return (
-    <View>
+    <View style={{flex:1}}>
       <Card style={styles.container}>
         <View style={styles.cardView}>
           <Image
@@ -23,9 +23,9 @@ const Home = () => {
 
       <FAB
         style={styles.fab}
-        small
+        small={false}
         icon="plus"
-        onPress={() => console.log("Pressed")}
+        onPress={() =>props.navigation.navigate("Create")}
       />
     </View>
   );
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+    backgroundColor:"#2941e6"
   },
 });
 

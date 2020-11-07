@@ -93,6 +93,8 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   input: {
     margin: 5,
+    padding:5,
+    height:50
   },
   modalView: {
     position: "absolute",
