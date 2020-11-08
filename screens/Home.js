@@ -4,7 +4,7 @@ import { Card, FAB } from "react-native-paper";
 
 const Home = (props) => {
   return (
-    <View style={{flex:1}}>
+    <View style={{ flex: 1 }}>
       <Card style={styles.container}>
         <View style={styles.cardView}>
           <Image
@@ -25,7 +25,7 @@ const Home = (props) => {
         style={styles.fab}
         small={false}
         icon="plus"
-        onPress={() =>props.navigation.navigate("Create")}
+        onPress={() => props.navigation.navigate("Create")}
       />
     </View>
   );
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor:"#2941e6"
+    backgroundColor: "#2941e6"
   },
 });
 

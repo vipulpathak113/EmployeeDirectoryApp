@@ -12,35 +12,35 @@ export default function CreateEmployee() {
   const [modal, setModal] = useState(false);
 
 
-  const pickFromGallery= async ()=>{
+  const pickFromGallery = async () => {
     const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
     if (status !== 'granted') {
       alert('Sorry, we need camera roll permissions to make this work!');
     }
-    else{
+    else {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [1, 1],
         quality: 0.5,
       });
-  
-      if(!result.cancelled){
-        let newFile={
-          uri:result.uri,
-          type:`test/${result.uri.split(".")[1]}`,
-          name:`test.${result.uri.split(".")[1]}`
+
+      if (!result.cancelled) {
+        let newFile = {
+          uri: result.uri,
+          type: `test/${result.uri.split(".")[1]}`,
+          name: `test.${result.uri.split(".")[1]}`
         }
         handleUpload(newFile)
       }
-    } 
+    }
   }
-  const pickFromCamera= async ()=>{
+  const pickFromCamera = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== 'granted') {
       alert('Sorry, we need camera permissions to make this work!');
     }
-    else{
+    else {
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
@@ -48,29 +48,27 @@ export default function CreateEmployee() {
         quality: 0.5,
       });
 
-      if(!result.cancelled){
-        let newFile={
-          uri:result.uri,
-          type:`test/${result.uri.split(".")[1]}`,
-          name:`test.${result.uri.split(".")[1]}`
+      if (!result.cancelled) {
+        let newFile = {
+          uri: result.uri,
+          type: `test/${result.uri.split(".")[1]}`,
+          name: `test.${result.uri.split(".")[1]}`
         }
         handleUpload(newFile)
       }
-  
-      console.log(result);
-    } 
+    }
   }
 
-  const handleUpload=(image)=>{
-    const data= new FormData()
-    data.append('file',image)
-    data.append('upload_preset',"employeeapp")
-    data.append('cloud_name',"vipul113")
+  const handleUpload = (image) => {
+    const data = new FormData()
+    data.append('file', image)
+    data.append('upload_preset', "employeeapp")
+    data.append('cloud_name', "vipul113")
 
-    fetch("https://api.cloudinary.com/v1_1/vipul113/image/upload",{
-      method:"post",
-      body:data
-    }).then(res=>res.json()).then(data=>{
+    fetch("https://api.cloudinary.com/v1_1/vipul113/image/upload", {
+      method: "post",
+      body: data
+    }).then(res => res.json()).then(data => {
       setPicture(data.url)
       setModal(false)
     })
@@ -112,7 +110,7 @@ export default function CreateEmployee() {
         mode="outlined"
       />
       <Button
-        icon={Picture==""?"upload":"check"}
+        icon={Picture == "" ? "upload" : "check"}
         style={styles.input}
         mode="contained"
         onPress={() => setModal(true)}
@@ -161,8 +159,8 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   input: {
     margin: 5,
-    padding:5,
-    height:50
+    padding: 5,
+    height: 50
   },
   modalView: {
     position: "absolute",
