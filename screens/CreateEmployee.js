@@ -2,14 +2,35 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
+import axios from "axios";
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 
 export default function CreateEmployee() {
   const [Name, setName] = useState("");
+  const [Position, setPosition] = useState("");
   const [Phone, setPhone] = useState("");
   const [Email, setEmail] = useState("");
   const [Salary, setSalary] = useState("");
   const [Picture, setPicture] = useState("");
   const [modal, setModal] = useState(false);
+
+
+  const saveEmployee=()=>{
+    axios.post('http://1c8dc9de28ed.ngrok.io/createEmployee', {
+      name: Name,
+      email: Email,
+      phone: Phone,
+      picture: Picture,
+      salary: Salary,
+      position: Position
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
 
   const pickFromGallery = async () => {
@@ -85,6 +106,13 @@ export default function CreateEmployee() {
         onChangeText={(text) => setName(text)}
         mode="outlined"
       />
+       <TextInput
+        style={styles.input}
+        label="Position"
+        value={Position}
+        onChangeText={(text) => setPosition(text)}
+        mode="outlined"
+      />
       <TextInput
         style={styles.input}
         label="Email"
@@ -121,7 +149,7 @@ export default function CreateEmployee() {
         icon="content-save"
         style={styles.input}
         mode="contained"
-        onPress={() => setModal(true)}
+        onPress={() => saveEmployee()}
       >
         save
       </Button>
