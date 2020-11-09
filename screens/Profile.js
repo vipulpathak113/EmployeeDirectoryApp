@@ -3,12 +3,13 @@ import { StyleSheet, Text, View, Image, Linking, Platform } from "react-native";
 import { Title, Card, Button } from "react-native-paper";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 
-export default function Profile() {
+export default function Profile(props) {
+  const data = props.route.params.item
   const openDialer = () => {
     if (Platform.OS === "android") {
-      Linking.openURL("tel:123456");
+      Linking.openURL(`tel:${data.email}`);
     } else {
-      Linking.openURL("telprompt:123456789");
+      Linking.openURL(`telprompt:${data.email}`);
     }
   };
   return (
@@ -19,23 +20,23 @@ export default function Profile() {
           style={{ height: 140, width: 140, borderRadius: 70, marginTop: -50 }}
           source={{
             uri:
-              "https://filmdaily.co/wp-content/uploads/2020/06/babyyoda-lede.jpg",
+              data.picture
           }}
         />
       </View>
       <View style={{ alignItems: "center" }}>
-        <Title>Baby Yoda</Title>
-        <Text>Senior Jedi</Text>
+        <Title>{data.name}</Title>
+        <Text>{data.position}</Text>
       </View>
       <Card
         style={styles.cardView}
         onPress={() => {
-          Linking.openURL("mailto:baby@yoda.com");
+          Linking.openURL(`mailto:${data.email}`);
         }}
       >
         <View style={styles.cardContent}>
           <MaterialIcons name="email" size={24} color="#2941e6" />
-          <Text style={styles.textStyle}>baby@yoda.com</Text>
+          <Text style={styles.textStyle}>{data.email}</Text>
         </View>
       </Card>
       <Card
@@ -46,13 +47,13 @@ export default function Profile() {
       >
         <View style={styles.cardContent}>
           <Entypo name="phone" size={24} color="#2941e6" />
-          <Text style={styles.textStyle}>1234567890</Text>
+          <Text style={styles.textStyle}>{data.phone}</Text>
         </View>
       </Card>
       <Card style={styles.cardView}>
         <View style={styles.cardContent}>
           <MaterialIcons name="attach-money" size={24} color="#2941e6" />
-          <Text style={styles.textStyle}>5 LPA</Text>
+          <Text style={styles.textStyle}>{data.salary}</Text>
         </View>
       </Card>
       <View

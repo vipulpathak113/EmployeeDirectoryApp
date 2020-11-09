@@ -1,31 +1,65 @@
-import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, Image, ActivityIndicator, ScrollView, RefreshControl } from "react-native";
 import { Card, FAB } from "react-native-paper";
+import axios from "axios";
 
-const Home = (props) => {
+const Home = ({ navigation }) => {
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true)
+
+  const fetchData = () => {
+    axios.get('http://138a814c3c8d.ngrok.io/getEmployee')
+      .then(function (response) {
+        setData(response.data)
+        setLoading(false)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  useEffect(() => {
+    fetchData()
+
+  }, [])
+
+  const employees = () => {
+    return data.map((item, key) => {
+      return (
+        <Card style={styles.container} key={key} onPress={() => {
+          navigation.navigate('Profile', { item })
+        }}>
+          <View style={styles.cardView}>
+            <Image
+              style={styles.profile}
+              source={{
+                uri:
+                  item.picture,
+              }}
+            />
+            <View style={{ marginLeft: 10 }}>
+              <Text style={{ fontSize: 18 }}>{item.name}</Text>
+              <Text style={{ fontSize: 18 }}>{item.position}</Text>
+            </View>
+          </View>
+        </Card>)
+    })
+  }
+
   return (
     <View style={{ flex: 1 }}>
-      <Card style={styles.container}>
-        <View style={styles.cardView}>
-          <Image
-            style={styles.profile}
-            source={{
-              uri:
-                "https://filmdaily.co/wp-content/uploads/2020/06/babyyoda-lede.jpg",
-            }}
-          />
-          <View style={{ marginLeft: 10 }}>
-            <Text style={{ fontSize: 18 }}>Baby Yoda</Text>
-            <Text style={{ fontSize: 18 }}>Senior Jedi</Text>
-          </View>
-        </View>
-      </Card>
-
+      <ScrollView refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={() => { fetchData() }} />
+      }>
+        {
+          employees()
+        }
+      </ScrollView>
       <FAB
         style={styles.fab}
         small={false}
         icon="plus"
-        onPress={() => props.navigation.navigate("Create")}
+        onPress={() => navigation.navigate("Create")}
       />
     </View>
   );

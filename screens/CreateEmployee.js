@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image, Modal } from "react-native";
+import { StyleSheet, Text, View, Image, Modal,Alert } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
-axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-export default function CreateEmployee() {
+export default function CreateEmployee({navigation}) {
   const [Name, setName] = useState("");
   const [Position, setPosition] = useState("");
   const [Phone, setPhone] = useState("");
@@ -16,7 +16,7 @@ export default function CreateEmployee() {
 
 
   const saveEmployee=()=>{
-    axios.post('http://1c8dc9de28ed.ngrok.io/createEmployee', {
+    axios.post('http://138a814c3c8d.ngrok.io/createEmployee', {
       name: Name,
       email: Email,
       phone: Phone,
@@ -25,7 +25,7 @@ export default function CreateEmployee() {
       position: Position
     })
     .then(function (response) {
-      console.log(response);
+      navigation.push('Home')
     })
     .catch(function (error) {
       console.log(error);
