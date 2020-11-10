@@ -65,7 +65,7 @@ app.post('/updateEmployee', (req, res) => {
         picture: req.body.picture,
         salary: req.body.salary,
         position: req.body.position
-    }).then(data => {
+    },{new: true}).then(data => {
         res.send(data)
     }).catch(err => {
         console.log(err)

@@ -2,9 +2,24 @@ import React from "react";
 import { StyleSheet, Text, View, Image, Linking, Platform } from "react-native";
 import { Title, Card, Button } from "react-native-paper";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
+import axios from "axios";
 
 export default function Profile(props) {
   const data = props.route.params.item
+
+  console.log(data)
+
+  const deleteEmployee=()=>{
+    axios.post('http://a892643b4695.ngrok.io/deleteEmployee', {
+      id: data._id
+    })
+    .then(function (response) {
+      props.navigation.push('Home')
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
   const openDialer = () => {
     if (Platform.OS === "android") {
       Linking.openURL(`tel:${data.email}`);
@@ -67,7 +82,7 @@ export default function Profile(props) {
           icon="account-edit"
           theme={theme}
           mode="contained"
-          onPress={() => setModal(true)}
+          onPress={() => props.navigation.push('Create',{data})}
         >
           Edit
         </Button>
@@ -75,7 +90,7 @@ export default function Profile(props) {
           icon="delete"
           theme={theme}
           mode="contained"
-          onPress={() => setModal(true)}
+          onPress={() => deleteEmployee()}
         >
           Remove
         </Button>

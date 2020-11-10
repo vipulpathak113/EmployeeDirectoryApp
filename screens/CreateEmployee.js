@@ -5,18 +5,44 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-export default function CreateEmployee({navigation}) {
-  const [Name, setName] = useState("");
-  const [Position, setPosition] = useState("");
-  const [Phone, setPhone] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Salary, setSalary] = useState("");
-  const [Picture, setPicture] = useState("");
+
+export default function CreateEmployee(props) {
+ 
+  const getDetails=(type)=>{
+  if(props.route.params){
+    const getData= props.route.params.data
+    switch(type){
+      case "name":
+        return getData.name
+      case "email":
+        return getData.email
+      case "phone":
+        return getData.phone
+      case "picture":
+        return getData.picture
+      case "position":
+        return getData.position
+      case "salary":
+        return getData.salary
+    }
+  
+  }
+    else{
+      return ""
+    }
+  
+  }
+  const [Name, setName] = useState(getDetails("name"));
+  const [Position, setPosition] = useState(getDetails("position"));
+  const [Phone, setPhone] = useState(getDetails("phone"));
+  const [Email, setEmail] = useState(getDetails("email"));
+  const [Salary, setSalary] = useState(getDetails("salary"));
+  const [Picture, setPicture] = useState(getDetails("picture"));
   const [modal, setModal] = useState(false);
 
-
-  const saveEmployee=()=>{
-    axios.post('http://138a814c3c8d.ngrok.io/createEmployee', {
+  const updateEmployee=()=>{
+    axios.post('http://a892643b4695.ngrok.io/updateEmployee', {
+      id:props.route.params.data._id,
       name: Name,
       email: Email,
       phone: Phone,
@@ -25,7 +51,25 @@ export default function CreateEmployee({navigation}) {
       position: Position
     })
     .then(function (response) {
-      navigation.push('Home')
+      console.log("response",response)
+      props.navigation.push('Home')
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  const saveEmployee=()=>{
+    axios.post('http://a892643b4695.ngrok.io/createEmployee', {
+      name: Name,
+      email: Email,
+      phone: Phone,
+      picture: Picture,
+      salary: Salary,
+      position: Position
+    })
+    .then(function (response) {
+      props.navigation.push('Home')
     })
     .catch(function (error) {
       console.log(error);
@@ -145,14 +189,25 @@ export default function CreateEmployee({navigation}) {
       >
         Upload Image
       </Button>
+      {props.route.params?
+       <Button
+       icon="content-save"
+       style={styles.input}
+       mode="contained"
+       onPress={() => updateEmployee()}
+     >
+       update
+     </Button>:
       <Button
-        icon="content-save"
-        style={styles.input}
-        mode="contained"
-        onPress={() => saveEmployee()}
-      >
-        save
-      </Button>
+      icon="content-save"
+      style={styles.input}
+      mode="contained"
+      onPress={() => saveEmployee()}
+    >
+      save
+    </Button>
+      }
+     
       <Modal
         animationType="slide"
         transparent={true}
