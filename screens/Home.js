@@ -9,7 +9,7 @@ const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(true)
 
   const fetchData = () => {
-    axios.get('http://a892643b4695.ngrok.io/getEmployee')
+    axios.get('http://0b1626cb4a85.ngrok.io/getEmployee')
       .then(function (response) {
         setData(response.data)
         setLoading(false)

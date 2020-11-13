@@ -10,7 +10,7 @@ export default function Profile(props) {
   console.log(data)
 
   const deleteEmployee=()=>{
-    axios.post('http://a892643b4695.ngrok.io/deleteEmployee', {
+    axios.post('http://0b1626cb4a85.ngrok.io/deleteEmployee', {
       id: data._id
     })
     .then(function (response) {
